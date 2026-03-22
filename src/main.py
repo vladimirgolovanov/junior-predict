@@ -17,6 +17,6 @@ class PredictRequest(BaseModel):
 
 
 @app.post("/predict")
-def predict(req: PredictRequest):
+async def predict(req: PredictRequest):
     end = await predict_end(req.child_id, req.start)
     return {"predicted_end": end}

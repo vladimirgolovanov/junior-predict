@@ -4,14 +4,16 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import StandardScaler
-from sqlalchemy import create_engine, text
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy import text
 import os
 
-engine = create_engine(os.environ["DATABASE_URL"])
+engine = create_async_engine(os.environ["DATABASE_URL"])
 
 async def load_data() -> pd.DataFrame:
-    with engine.connect() as conn:
-        df = pd.read_sql(text("SELECT child_id, start, end FROM sleep_events"), conn)
+    async with engine.connect() as conn:
+        result = await conn.execute(text("SELECT child_id, start, end FROM sleep_events"))
+        df = pd.DataFrame(result.fetchall(), columns=result.keys())
     df['start'] = pd.to_datetime(df['start'])
     df['end'] = pd.to_datetime(df['end'])
     return df
@@ -48,7 +50,7 @@ class EndTimeNet(nn.Module):
 
 
 async def predict_end(child_id: int, start_str: str) -> str:
-    df = load_data()
+    df = await load_data()
 
     X_df = extract_features(df)
     y_np = to_seconds(df['end']).values.astype(np.float32)
