@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "ml-pytorch"
+version = "0.1.0"
+description = "ML service using PyTorch"
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+uvicorn = "^0.34.0"
+#torch = [
+#  {version = "^2.6.0", source = "pytorch-cpu", markers = "sys_platform == 'linux'"},
+#  {version = "^2.6.0", markers = "sys_platform == 'darwin'"}
+#]
+torch = "^2.6.0"
+pandas = "^2.2.0"
+sqlalchemy = "^2.0.0"
+psycopg2-binary = "^2.9.0"
+scikit-learn = "^1.6.0"
+#debugpy = "^1.8.0"
+asyncpg = "^0.31.0"
+
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

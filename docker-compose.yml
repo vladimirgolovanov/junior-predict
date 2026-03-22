@@ -1,0 +1,12 @@
+services:
+  ml-pytorch:
+    build: .
+    ports:
+      - "8002:8002"
+      - "5678:5678" # debugger port
+    volumes:
+      - ./src:/app/src
+      - ./pyproject.toml:/app/pyproject.toml
+      - ./poetry.lock:/app/poetry.lock
+    env_file:
+      - ./src/.env
