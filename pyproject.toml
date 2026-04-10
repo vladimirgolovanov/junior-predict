@@ -8,11 +8,10 @@ authors = []
 python = "^3.11"
 fastapi = "^0.115.0"
 uvicorn = "^0.34.0"
-#torch = [
-#  {version = "^2.6.0", source = "pytorch-cpu", markers = "sys_platform == 'linux'"},
-#  {version = "^2.6.0", markers = "sys_platform == 'darwin'"}
-#]
-torch = "^2.6.0"
+torch = [
+  {version = "^2.6.0", source = "pytorch-cpu", markers = "sys_platform == 'linux'"},
+  {version = "^2.6.0", markers = "sys_platform == 'darwin'"}
+]
 pandas = "^2.2.0"
 sqlalchemy = "^2.0.0"
 psycopg2-binary = "^2.9.0"
