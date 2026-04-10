@@ -9,7 +9,7 @@ engine = create_async_engine(os.environ["DATABASE_URL"])
 
 async def load_data() -> pd.DataFrame:
     async with engine.connect() as conn:
-        result = await conn.execute(text("SELECT child_id, start, \"end\" FROM sleep_events WHERE start >= NOW() - INTERVAL '1 month'"))
+        result = await conn.execute(text("SELECT child_id, start, \"end\" FROM sleep_events WHERE start >= (NOW() - INTERVAL '1 month')::timestamp"))
         df = pd.DataFrame(result.fetchall(), columns=result.keys())
     df['start'] = pd.to_datetime(df['start'])
     df['end'] = pd.to_datetime(df['end'])
