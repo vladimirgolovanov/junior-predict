@@ -1,8 +1,7 @@
 services:
   ml-pytorch:
     image: ghcr.io/vladimirgolovanov/junior-predict:latest
-    ports:
-      - "50083:8002"
+    network_mode: host
     env_file:
       - .env
     restart: always
